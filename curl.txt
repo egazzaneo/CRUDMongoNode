@@ -1,0 +1,21 @@
+curl --location --request GET 'localhost:3000/menu'
+
+curl --location --request GET 'localhost:3000/menu/636ec3e562dbea0e3463fb6d'
+
+curl --location --request POST 'localhost:3000/menu' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "titulo": "Pizza Grande de Anchoas",
+    "precio": 1500,
+    "descripcion": "Pizza Grande de Anchoas con condimentos"
+}'
+
+curl --location --request POST 'localhost:3000/menu/636ec3e562dbea0e3463fb6d' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "titulo": "Pizza Grande de Anchoas",
+    "precio": 1300,
+    "descripcion": "Pizza Grande de Anchoas con condimentos"
+}'
+
+curl --location --request DELETE 'localhost:3000/menu/636ecb26674af2cf53a37393'
