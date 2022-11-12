@@ -1,11 +1,15 @@
 const express = require("express");
-const db = require("./database");
 const morgan = require("morgan");
 const Menu = require("./models/Menu");
+require('dotenv').config()
+const db = require("./database");
 
 const app = express();
 app.use(express.json());
 app.use(morgan("dev"));
+
+console.log(process.env.APP_MONGO_USER) // remove this after you've confirmed it is working
+
 
 //DEFAULT
 app.get("/", (req, res) => {
@@ -35,10 +39,20 @@ app.get("/menu/:id", async (req, res) => {
   try {
     const menu = await Menu.findById(req.params.id);
     // res.send(menu);
-    res.status(200).json({
-      status: menu ? "Item encontrado" : 'Item no existe',
+
+    menu
+      ? ((statusCode = 200), (statusMesssage = "SI"))
+      : ((statusCode = 400), (statusMesssage = "NO"));
+
+    res.status(statusCode).json({
+      status: statusMesssage,
       data: menu,
     });
+
+    // res.status(200).json({
+    //   status: "Item encontrado",
+    //   data: menu,
+    // });
   } catch (error) {
     res.status(404).json({
       status: "Error",
@@ -90,9 +104,9 @@ app.delete("/menu/:id", async (req, res) => {
     const menu = await Menu.findByIdAndDelete(req.params.id);
     //res.send(menu);
     res.status(200).json({
-        status: menu ? "Se elimino el registro" : "No existe el ID",
-        data: menu,
-      });
+      status: menu ? "Se elimino el registro" : "No existe el ID",
+      data: menu,
+    });
   } catch (error) {
     res.status(404).json({
       status: "Error",
