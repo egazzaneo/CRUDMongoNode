@@ -8,9 +8,6 @@ const app = express();
 app.use(express.json());
 app.use(morgan("dev"));
 
-console.log(process.env.APP_MONGO_USER) // remove this after you've confirmed it is working
-
-
 //DEFAULT
 app.get("/", (req, res) => {
   res.end("Funciona!");
